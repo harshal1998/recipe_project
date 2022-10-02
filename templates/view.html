@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Receipe</title>
+</head>
+<body style="background-color:#cdcd02;font-family: sans-serif;">
+    {% include 'header.html' %}
+    <div class="container"></div>
+    <a href="/" class="btn btn-dark btn-md" style="position: fixed;right: 0;margin: 1% 1%;"><i class="fa fa-home"></i></a>
+    {% if data.added_by.id == request.session.user_id %}
+        <a href="/edit/{{data.id}}" class="btn btn-dark btn-md" style="position: fixed;right: 0;margin: 5% 1%;"><i class="fa fa-pencil"></i></a>
+    {% endif %}
+    <div class="container">
+        <h1 class="header text-center">{{data.name}}</h1><br>
+        <div class="row">
+            <img src="/media/{{data.image}}" alt="{{data.name}} image" align="center" style="width:50%;height: 50%;margin-left: 25%;">
+        </div>
+        <div class="row mt-5">
+            <h4>Description:</h4>
+            <p style="margin-left:1rem;">{{data.description}}</p>
+        </div>
+        <div class="row">
+            <h4>Ingredients:</h5>
+            <!-- <pre style="font-family: sans-serif;font-size: 16px;margin-left:-6.5rem;margin-top:2.5rem;line-height: 1.6rem;">{{data.ingredients}}</pre> -->
+            <pre style="font-family: sans-serif;font-size: 16px;margin-left:1rem;">{{data.ingredients}}</pre>
+        </div>
+        <div class="row">
+            <h4>Receipe(Steps):</h4>
+            <pre style="font-family: sans-serif;font-size: 16px;margin-left:1rem;">{{data.recipe}}</pre>
+        </div>
+        <label style="color:#705050;position:absolute;right:12rem;">Recipe added by {{data.added_by.name}}</label>
+    </div>
+</body>
+</html>

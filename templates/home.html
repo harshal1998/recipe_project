@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% comment %} <title>Recipe Project</title> {% endcomment %}
+</head>
+<body style="background-color:#cdcd02;">
+    {% include 'header.html' %}
+    <div class="container mt-2">
+        <h1 class="text-center">Receipies</h1>
+    </div>
+    <div class="container my-5">
+        <div class="row">
+            <div class="col-md-2" align="center">
+                <a href="/add" class="btn btn-info btn-lg m-4" style="width:150px">Add</a>
+            </div>
+            <div class="col-md-8">
+                <form action="/search">
+                    <div class="input-group m-4 col-md-12">
+                        <input type="text" id="keyword" name="keyword" class="form-control form-control-lg" placeholder="Enter keyword to search in name, recipe, ingredients, description" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-dark btn-lg" style="color:white;">Search</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-2">
+                <div class="col-md-2" align="center">
+                    <a href="/logout" class="btn btn-danger btn-lg m-4" style="width:150px">Logout</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            {% for d in data %}
+            <div class="col-md-4 col-sm-12 col-xs-12 mt-4">
+                <div class="card" style="width: 23rem;height:32rem;">
+                    {% if d.added_by.id == request.session.user_id %}
+                        <a href="/edit/{{d.id}}"><img class="card-img-top edit_btn" alt="Card image cap"></a>
+                    {% endif %}
+                    <img class="card-img-top" src="media/{{ d.image }}" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ d.name }}</h5>
+                        <p class="card-text">{{ d.description }} <br> </p>
+                        {% comment %} <label>By : {{ d.added_by__name }}</label> {% endcomment %}
+                        <a href="/recipe/{{d.id }}" class="btn btn-primary mb-3" style="position:absolute;bottom:0px;width:89%;align:center;">View Recipe</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <ul class="pagination pagination-md justify-content-center">
+        {% if data.has_previous %}
+            <li class="page-item"><a href="/?{{data.previous_page_number}}" class="page-link" tabindex="-1"><i class="fa fa-long-arrow-left"></i></a></li>
+        {% endif %}
+        {% for d in data.paginator.page_range %}
+        {% if page_no|add:"0" == d|add:"0" %}
+            <li class="page-item active"><a href="/?page={{forloop.counter}}" class="page-link">{{forloop.counter}}</a></li>
+        {% else %}
+            <li class="page-item"><a href="/?page={{forloop.counter}}" class="page-link">{{forloop.counter}}</a></li>
+        {% endif %}
+        {% endfor %}
+        {% if data.has_next  %}
+            <li class="page-item"><a href="/?page={{data.next_page_number}}" class="page-link"><i class="fa fa-long-arrow-right"></i></a></li>
+        {% endif %}
+    </ul>
+</body>
+</html>

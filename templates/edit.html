@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Recipe</title>
+</head>
+<body style="background-color:#cdcd02;">
+    {% include 'header.html' %}
+    <a href="/" class="btn btn-dark btn-md" style="position: fixed;right: 0;margin: 1% 1%;"><i class="fa fa-home"></i></a>
+    <div class="container">
+        <h1 class="header text-center">Add Recipe</h1>
+        <form method="POST" action="/edit/{{data.id}}" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group my-3">
+                <label for="name">Name</label>
+                <input type="text" class="form-control" id="name" name="name" value={{data.name}} aria-describedby="username" placeholder="Enter Recipe Name" required>
+            </div>
+            <div class="form-group my-3">
+                <label for="description">Receipe Image</label>
+                <div class="custom-file">
+                    <input type="file" class="custom-file-input" id="image" name="image" accept=".jpg,.jpeg,.png">
+                    <label class="custom-file-label" for="customFile">Choose file</label>
+                </div>
+            </div>
+            <div class="form-group my-3">
+                <label for="description">Description</label>
+                <textarea class="form-control" id="description" name="description" placeholder="description" maxlength="275" required>{{data.description}}</textarea>
+            </div>
+            <div class="form-group my-3">
+                <label for="description">Ingredients</label>
+                <textarea class="form-control" id="ingredients" name="ingredients" placeholder="Ingredients" style="height:150px" required>{{data.ingredients}}</textarea>
+            </div>
+            <div class="form-group my-3">
+                <label for="description">Receipe</label>
+                <textarea class="form-control" id="recipe" name="recipe" placeholder="Recipe" style="height:250px" required>{{data.recipe}}</textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Update</button>
+        </form>
+    </div>
+    <script>
+        // Add the following code if you want the name of the file appear on select
+        $(".custom-file-input").on("change", function() {
+          var fileName = $(this).val().split("\\").pop();
+          $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+        });
+    </script>
+</body>
+</html>
