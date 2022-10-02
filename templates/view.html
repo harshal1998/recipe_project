@@ -10,6 +10,7 @@
     {% include 'header.html' %}
     <div class="container"></div>
     <a href="/" class="btn btn-dark btn-md" style="position: fixed;right: 0;margin: 1% 1%;"><i class="fa fa-home"></i></a>
+    {{data.added_by.id}} - {{request.session.user_id}}
     {% if data.added_by.id == request.session.user_id %}
         <a href="/edit/{{data.id}}" class="btn btn-dark btn-md" style="position: fixed;right: 0;margin: 60px 1% 0% 0%;"><i class="fa fa-pencil"></i></a>
     {% endif %}
